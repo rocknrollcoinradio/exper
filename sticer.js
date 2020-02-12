@@ -7,14 +7,15 @@ var botOptions = {
 var bot = new TelegramBot(token, botOptions);
 
 var stickersList = [
-    'AQAD30jKDgAEOkEAAg',
-    'AQAD30jKDgAEOkEAAg',
-    'AQAD30jKDgAEOkEAAg',
-    'AQAD30jKDgAEOkEAAg',
-    'AQAD30jKDgAEOkEAAg',
-    'AQAD30jKDgAEOkEAAg',
-    'AQADdCDKDgAEAWAAAg',
-    'AQADdCDKDgAEAWAAAg'
+    'BQADAgADfgADEag0Bb5mxH0gvtktAg',
+    'BQADAgADowADEag0BQs_xQSkcIFKAg',
+    'BQADAgAD1wADEag0BTEYGb09JERjAg',
+    'BQADAgAD5wADEag0BZAwDWvpwGrtAg',
+    'BQADAgADxQADEag0BRBpCE1JOT4sAg',
+    'BQADAgADwwADEag0BbGlUZ12nxZ8Ag',
+    'BQADAgADvwADEag0Bf5nBjEjQyUYAg',
+    'BQADAgADyQADEag0BYauZXVnHFqOAg'
+    
 ];
 var http = require('http');
 http.createServer(function (req, res) { res.writeHead(200, {'Content-Type': 'text/plain'}); res.send('it is running\n'); }).listen(process.env.PORT || 5000);
