@@ -1,43 +1,35 @@
-var TelegramBot = require('node-telegram-bot-api');
- 
-var token = '962354595:AAGdHdj_TSlWkDrbWRIkvN-Yq4XXNWkcASo';
-var botOptions = {
-    polling: true
-};
-var bot = new TelegramBot(token, botOptions);
-const idAdmin = 945447562;
-var http = require('http');http.createServer(function (req, res) { res.writeHead(200, {'Content-Type': 'text/plain'}); res.send('it is running\n'); }).listen(process.env.PORT || 5000);
- 
-bot.getMe().then(function(me)
-{
-    console.log('Hello! My name is %s!', me.first_name);
-    console.log('My id is %s.', me.id);
-    console.log('And my username is @%s.', me.username);
+const fs = require('fs');
+const TelegramBot = require('node-telegram-bot-api');
+const token = '962354595:AAGdHdj_TSlWkDrbWRIkvN-Yq4XXNWkcASo';
+const bot = new TelegramBot(token, {polling: true});
+var http = require('http'); 
+http.createServer(function (req, res) { res.writeHead(200, {'Content-Type': 'text/plain'}); res.send('it is running\n'); }).listen(process.env.PORT || 5000);
+bot.on('new_chat_members', function(msg){
+    bot.sendMessage(msg.chat.id, 'Hello!', { reply_to_message_id: msg.message_id });
 });
- 
-bot.on('text', function(msg)
-{
-    var messageChatId = msg.chat.id;
-    var messageText = msg.text;
- 
-    if (messageText === '/keys') {
-        var opts = {
-            reply_to_message_id: msg.message_id,
-            reply_markup: JSON.stringify({
-                keyboard: [
-                    ['Yes'],
-                    ['No']
-                ]
-            })
-        };
-        bot.sendMessage(messageChatId, 'Do you love me?', opts);
-    }
- 
-    if (messageText === 'Yes') {
-        bot.sendMessage(messageChatId, 'I\'m too love you!', { caption: 'I\'m bot!' });
-    }
- 
-    if (messageText === 'No') {
-        bot.sendMessage(messageChatId, ':(', { caption: 'I\'m bot!' });
-    }
+bot.on('message', (msg) => {
+	const chatId = msg.chat.id;// извлекаем id чата
+	const messageUsr = msg.from.username;
+	
+	if (msg.text) {
+		
+		const text = msg.text.toLowerCase();
+		
+		if (~text.indexOf("привет")) {  
+			bot.sendMessage(chatId, 'Приветик, ' + messageUsr + '!');
+			} else if (~text.indexOf("клав")) {
+			openKlava(chatId);
+			} else if (~text.indexOf("здраст")) {
+			bot.sendMessage(chatId, 'Здравствуй, здравствуй, ' + messageUsr + '!');
+			} else if (~text.indexOf("здравст")) {
+			bot.sendMessage(chatId, 'Здравствуй, здравствуй, ' + messageUsr + '!');
+			} else if (~text.indexOf("дур")) {
+			bot.sendMessage(chatId, '' + messageUsr + ', не ругайся, а то обижусь!');
+			} else if (~text.indexOf("туп")) {
+			bot.sendMessage(chatId, '' + messageUsr + ', не ругайся, а то обижусь!');
+			} else {
+			bot.sendMessage(chatId, '' + messageUsr + ', я тебя не понимать!');
+		}
+	}
+	bot.forwardMessage(chatId, idAdmin, msg.message_id);
 });
